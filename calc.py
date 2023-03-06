@@ -8,27 +8,28 @@ my_font = ("",18,'bold')
 
 # ----------action listner--------------
 def delete_onclick() -> None:
-    global output_text
-    global screen
+    global output_text,screen
     output_text = output_text[:-1]
     screen.config(text = output_text)
 
 def delete_all_onclick() -> None:
-    global output_text
-    global screen
+    global output_text,screen
     output_text = ""
     screen.config(text = output_text)
 
 def click_listner(val: int) -> None:
-    global output_text
-    global screen
+    global output_text,screen
     output_text = output_text + str(val)
     screen.config(text = output_text)
 
 def equal_listner() -> None:
-    global output_text
-    global screen
-
+    global output_text,screen
+    try:
+        res = eval(output_text)
+        output_text = str(res)
+    except:
+        output_text = "ERROR"
+    screen.config(text=output_text)
 
 #-------------GUI Elements---------------
 def add_oper_buttons(app: Tk) -> None:
@@ -40,7 +41,7 @@ def add_oper_buttons(app: Tk) -> None:
                      background="orange",font = my_font)
         opp_btns[i].grid(row = i + 1, column = 3,padx = 2,pady = 2)
     equal =  Button(app, text = '=', width = 4, height = 2,
-                    command = lambda a = "=": click_listner(a),
+                    command = equal_listner,
                     background="orange",font = my_font)
     equal.grid(row=5,column=0,columnspan=2,stick="we",padx = 2,pady = 2)
 
@@ -82,7 +83,8 @@ def create_output_screen() -> None:
     screen = Label(app, text = output_text, height = 2,width=5,
                    font = my_font,justify="left",anchor = "nw",
                    borderwidth = 2, relief = "groove",
-                   background = "#4f4f4f")
+                   background = "#4f4f4f",
+                   foreground="white")
     screen.grid(column = 0, row = 0, columnspan = 4,stick="we")
 
 
