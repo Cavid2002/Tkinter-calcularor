@@ -39,11 +39,11 @@ def add_oper_buttons(app: Tk) -> None:
         opp_btns[i] = Button(app, text = opp[i], width = 4, height = 2,
                      command = lambda a = opp[i]: click_listner(a),
                      background="orange",font = my_font)
-        opp_btns[i].grid(row = i + 1, column = 3,padx = 2,pady = 2)
+        opp_btns[i].grid(row = i + 1, column = 3,padx = 2,pady = 2,stick="wens")
     equal =  Button(app, text = '=', width = 4, height = 2,
                     command = equal_listner,
                     background="orange",font = my_font)
-    equal.grid(row=5,column=0,columnspan=2,stick="we",padx = 2,pady = 2)
+    equal.grid(row=5,column=0,columnspan=2,stick="wens",padx = 2,pady = 2)
 
 
 def add_num_buttons(app: Tk) -> None:
@@ -53,28 +53,28 @@ def add_num_buttons(app: Tk) -> None:
     num_btns[0] = Button(app, text ="0", width = 4, height = 2,
                      command = lambda a = 0: click_listner(a),
                      background="orange",font = my_font)
-    num_btns[0].grid(row = 4,column = 0,padx = 2,pady = 2)
+    num_btns[0].grid(row = 4,column = 0,padx = 2,pady = 2,stick="wens")
     for i in range(1,4):
         for j in range(0,3):
             num_btns[c] = Button(app, text = f"{c}", width = 4, height = 2,
                              command = lambda a = c: click_listner(a),
                              background="orange",font = my_font)
-            num_btns[c].grid(row = i, column = j,padx = 2,pady = 2)
+            num_btns[c].grid(row = i, column = j,padx = 2,pady = 2,stick="wens")
             c = c + 1
     dot = Button(app, text =".", width = 4, height = 2,
                      command = lambda a = ".": click_listner(a),
                      background="orange",font = my_font)
-    dot.grid(row = 4,column = 1,columnspan=2,stick="we",padx = 2,pady = 2)
+    dot.grid(row = 4,column = 1,columnspan=2,stick="wens",padx = 2,pady = 2)
 
 def add_del_buttons(app: Tk) -> None:
     del_btn = Button(app, text ="C", width = 4, height = 2,
                      command = delete_onclick,
                      background="orange",font = my_font)
-    del_btn.grid(row=5,column=3,padx = 2,pady = 2)
+    del_btn.grid(row=5,column=3,padx = 2,pady = 2,stick="wens")
     del_all_btn = Button(app, text ="AC", width = 4, height = 2,
                      command = delete_all_onclick,
                      background="orange",font = my_font)
-    del_all_btn.grid(row=5,column=2,padx = 2,pady = 2)
+    del_all_btn.grid(row=5,column=2,padx = 2,pady = 2,stick="wens")
     
     
 def create_output_screen() -> None:
@@ -85,17 +85,23 @@ def create_output_screen() -> None:
                    borderwidth = 2, relief = "groove",
                    background = "#4f4f4f",
                    foreground="white")
-    screen.grid(column = 0, row = 0, columnspan = 4,stick="we")
+    screen.grid(column = 0, row = 0, columnspan = 4,stick="wens")
 
+def grid_config(app: Tk):
+    for i in range(0,4):
+        app.grid_columnconfigure(i,weight=1)
+    for i in range(0,6):
+        app.grid_rowconfigure(i,weight=1)
 
 #---------Entry point---------------
 def main() -> None:
     global app
-    create_output_screen()
-    app.geometry("355x510")
+    app.geometry("350x400")
+    app.minsize(300,300)
     app.title("Basic Calculator")
-    app.resizable(height = False, width = False)
     app.config(background = "#4f4f4f")
+    create_output_screen()
+    grid_config(app)
     add_num_buttons(app)
     add_oper_buttons(app)
     add_del_buttons(app)
