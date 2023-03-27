@@ -17,7 +17,7 @@ def delete_all_onclick() -> None:
     output_text = ""
     screen.config(text = output_text)
 
-def click_listner(val: int) -> None:
+def click_listner(val: str) -> None:
     global output_text,screen
     output_text = output_text + str(val)
     screen.config(text = output_text)
@@ -31,17 +31,28 @@ def equal_listner() -> None:
         output_text = "ERROR"
     screen.config(text=output_text)
 
+def adv_click_listner(val: str) -> None:
+    global output_text,screen
+    line: str = val + "(" + output_text + ")"
+    output_text = line
+    screen.config(text=output_text)
+
 #-------------GUI Elements---------------
 def add_oper_buttons(app: Tk) -> None:
     opp_btns: Button = [None] * 4
-    add_opp_btns: Button = [None] * 5
+    adv_opp_btns: Button = [None] * 5
     opp = ["+","-","*","/"]
-    ad_opp = ["sin", "cos", "tan", "cot", "log"]
-    for i in range(0,5):
-        add_opp_btns[i] = Button(app, text = ad_opp[i], width = 4, height = 2,
-                     command = lambda a = ad_opp[i]: click_listner(a),
+    adv_opp = ["sin", "cos", "tan", "cot"]
+    for i in range(0,4):
+        adv_opp_btns[i] = Button(app, text = adv_opp[i], width = 4, height = 2,
+                     command = lambda a = adv_opp[i]: adv_click_listner(a),
                      background="orange",font = my_font)
-        add_opp_btns[i].grid(row = i + 1, column = 4,padx = 2,pady = 2,stick="wens")
+        adv_opp_btns[i].grid(row = i + 1, column = 4,padx = 2,pady = 2,stick="wens")
+    
+    pi_btn: Button = Button(app, text = 3.14, width = 4, height = 2,
+                     command = lambda a = pi: click_listner(a),
+                     background="orange",font = my_font)
+    pi_btn.grid(row = 5, column = 4,padx = 2,pady = 2,stick="wens")
     
     for i in range(0,4):
         opp_btns[i] = Button(app, text = opp[i], width = 4, height = 2,
