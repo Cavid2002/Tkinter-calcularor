@@ -1,5 +1,5 @@
 from tkinter import *
-
+from math import *
 
 app = Tk()
 output_text: str = ""
@@ -34,7 +34,15 @@ def equal_listner() -> None:
 #-------------GUI Elements---------------
 def add_oper_buttons(app: Tk) -> None:
     opp_btns: Button = [None] * 4
+    add_opp_btns: Button = [None] * 5
     opp = ["+","-","*","/"]
+    ad_opp = ["sin", "cos", "tan", "cot", "log"]
+    for i in range(0,5):
+        add_opp_btns[i] = Button(app, text = ad_opp[i], width = 4, height = 2,
+                     command = lambda a = ad_opp[i]: click_listner(a),
+                     background="orange",font = my_font)
+        add_opp_btns[i].grid(row = i + 1, column = 4,padx = 2,pady = 2,stick="wens")
+    
     for i in range(0,4):
         opp_btns[i] = Button(app, text = opp[i], width = 4, height = 2,
                      command = lambda a = opp[i]: click_listner(a),
@@ -85,7 +93,7 @@ def create_output_screen() -> None:
                    borderwidth = 2, relief = "groove",
                    background = "#4f4f4f",
                    foreground="white")
-    screen.grid(column = 0, row = 0, columnspan = 4,stick="wens")
+    screen.grid(column = 0, row = 0, columnspan = 5,stick="wens")
 
 def grid_config(app: Tk):
     for i in range(0,4):
