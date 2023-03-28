@@ -33,23 +33,43 @@ def equal_listner() -> None:
 
 def adv_click_listner(val: str) -> None:
     global output_text,screen
+    line: str = val + "(radians(" + output_text + "))"
+    output_text = line
+    screen.config(text=output_text)
+
+
+def pow_click_listner(val: str) -> None:
+    global output_text,screen
     line: str = val + "(" + output_text + ")"
     output_text = line
     screen.config(text=output_text)
 
+
 #-------------GUI Elements---------------
 def add_oper_buttons(app: Tk) -> None:
     opp_btns: Button = [None] * 4
-    adv_opp_btns: Button = [None] * 5
+    trig_opp_btns: Button = [None] * 4
+    pow_opp_btns: Button = [None] * 4
+    pow_opp = ["sqrt", "log10", "log2", "log"]
     opp = ["+","-","*","/"]
-    adv_opp = ["sin", "cos", "tan", "cot"]
-    for i in range(0,4):
-        adv_opp_btns[i] = Button(app, text = adv_opp[i], width = 4, height = 2,
-                     command = lambda a = adv_opp[i]: adv_click_listner(a),
+    trig_opp = ["sin", "cos", "tan", "cot"]
+    euler: Button = Button(app, text = "e", width = 4, height = 2,
+                     command = lambda a = e: click_listner(a),
                      background="orange",font = my_font)
-        adv_opp_btns[i].grid(row = i + 1, column = 4,padx = 2,pady = 2,stick="wens")
+    euler.grid(row = 5, column = 5,padx = 2,pady = 2,stick="wens")
+    for i in range(0,4):
+        pow_opp_btns[i] = Button(app, text = pow_opp[i], width = 4, height = 2,
+                     command = lambda a = pow_opp[i]: pow_click_listner(a),
+                     background="orange",font = my_font)
+        pow_opp_btns[i].grid(row = i + 1, column = 5,padx = 2,pady = 2,stick="wens")
+
+    for i in range(0,4):
+        trig_opp_btns[i] = Button(app, text = trig_opp[i], width = 4, height = 2,
+                     command = lambda a = trig_opp[i]: adv_click_listner(a),
+                     background="orange",font = my_font)
+        trig_opp_btns[i].grid(row = i + 1, column = 4,padx = 2,pady = 2,stick="wens")
     
-    pi_btn: Button = Button(app, text = 3.14, width = 4, height = 2,
+    pi_btn: Button = Button(app, text = "π", width = 4, height = 2,
                      command = lambda a = pi: click_listner(a),
                      background="orange",font = my_font)
     pi_btn.grid(row = 5, column = 4,padx = 2,pady = 2,stick="wens")
@@ -104,10 +124,10 @@ def create_output_screen() -> None:
                    borderwidth = 2, relief = "groove",
                    background = "#4f4f4f",
                    foreground="white")
-    screen.grid(column = 0, row = 0, columnspan = 5,stick="wens")
+    screen.grid(column = 0, row = 0, columnspan = 6,stick="wens")
 
 def grid_config(app: Tk):
-    for i in range(0,4):
+    for i in range(0,6):
         app.grid_columnconfigure(i,weight=1)
     for i in range(0,6):
         app.grid_rowconfigure(i,weight=1)
@@ -115,8 +135,8 @@ def grid_config(app: Tk):
 #---------Entry point---------------
 def main() -> None:
     global app
-    app.geometry("350x400")
-    app.minsize(300,300)
+    app.geometry("450x500")
+    app.minsize(400,400)
     app.title("Basic Calculator")
     app.config(background = "#4f4f4f")
     create_output_screen()
